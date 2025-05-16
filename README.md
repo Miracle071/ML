@@ -1,7 +1,9 @@
 Objective
+
 Develop a new solution capable of extracting product information from furniture store websites.
 
 Input
+
 You will receive a list of URLs from various furniture store websites. While most URLs will contain product information, some may not, and others may be dysfunctional. You can access the list of URLs via the following link: URL list file.
 
 Output

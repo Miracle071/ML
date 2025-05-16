@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Furniture Product Extractor</title>
+</head>
+<body>
+  <h1>Furniture Product Extractor</h1>
+  <input id="urlInput" type="text" placeholder="Enter product page URL" size="50" />
+  <button onclick="extractProducts()">Extract Products</button>
+
+  <h2>Extracted Products:</h2>
+  <ul id="productList"></ul>
+
+<script>
+async function extractProducts() {
+  const url = document.getElementById("urlInput").value;
+  if (!url) {
+    alert("Please enter a URL");
+    return;
+  }
+
+  const response = await fetch("/extract-products", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url })
+  });
+
+  if (!response.ok) {
+    const err = await response.json();
+    alert("Error: " + err.detail);
+    return;
+  }
+
+  const data = await response.json();
+  const list = document.getElementById("productList");
+  list.innerHTML = "";
+
+  if (data.products.length === 0) {
+    list.innerHTML = "<li>No products found</li>";
+    return;
+  }
+
+  data.products.forEach(prod => {
+    const li = document.createElement("li");
+    li.textContent = prod;
+    list.appendChild(li);
+  });
+}
+</script>
+</body>
+</html>
